@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Demo</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/testing.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+    <div th:replace="header :: header"></div>
+    <div class="content">
+        <div class="tests-container">
+            <ul class="responsive-table">
+                <li class="table-header">
+                    <div class="col col-1">#</div>
+                    <div class="col col-2">Name</div>
+                    <div class="col col-3">Subject</div>
+                    <div class="col col-3">Difficulty</div>
+                    <div class="col col-1">Time (minutes)</div>
+                    <div class="col col-1">Views</div>
+                    <div class="col col-1">Delete</div>
+                    <div class="col col-1">Edit</div>
+                </li>
+                <li th:each="test: ${tests}" class="table-row">
+                    <div class="col col-1" th:value="${test.id}" th:text="${test.id}"></div>
+                    <div class="col col-2" th:value="${test.testDetails.name}" th:text="${test.testDetails.name}"></div>
+                    <div class="col col-3" th:value="${test.testDetails.subject}" th:text="${test.testDetails.subject}"></div>
+                    <div class="col col-3" th:value="${test.testDetails.difficulty}" th:text="${test.testDetails.difficulty}"></div>
+                    <div class="col col-1" th:value="${test.timeToComplete}" th:text="${test.timeToComplete}"></div>
+                    <div class="col col-1" th:value="${test.viewNumber}" th:text="${test.viewNumber}"></div>
+                    <div class="col col-1">
+                        <form th:action="@{/app/admin/tests/{id}(id=${test.id})}" th:method="delete">
+                            <button class="button" type="submit">Delete</button>
+                        </form>
+                    </div>
+                    <div class="col col-1">
+                        <a class="button" th:href="@{/app/admin/tests/{id}/editTest(id=${test.id})}" role="button">Edit</a>
+                    </div>
+                </li>
+            </ul>
+            <form th:action="@{/app/admin/tests/createTest}" method="POST" class="w-100">
+                <button type="submit" class="button wide-button">Create Test</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

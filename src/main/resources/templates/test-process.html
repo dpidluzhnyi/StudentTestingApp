@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Demo</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/testing.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body th:attr="onload='startTimer(\'' + ${timer} + '\');'">
+    <div th:replace="header :: header"></div>
+    <div class="content">
+        <div class="test-name">
+            <h1 th:text="${test.testDetails.name}"></h1>
+            <span id="timer"></span>
+        </div>
+        <div class="questions-container">
+            <form th:action="@{/app/student/tests/calcResult}" method="POST" id="test-form">
+                <input type="hidden" th:value="${result.id}" th:name="resultId">
+                <div th:each="question, iterator: ${test.questions}">
+                    <input type="hidden" id="timeToComplete" th:value="${test.timeToComplete}"/>
+                    <div class="col question-index" th:value="${iterator.index + 1}" th:text="${iterator.index + 1} +'.'"></div>
+                    <div class="col" th:value="${question.text}" th:text="${question.text}"></div>
+                    <div th:each="option: ${question.options}"  class="question">
+                        <label>
+                            <input type="checkbox"
+                                   th:name="${option.id}"
+                                   th:value="true"
+                                   th:text="${option.text}">
+                        </label>
+                    </div>
+                </div>
+                <label>
+                    <input hidden="hidden" th:field="${test.id}">
+                </label>
+                <button class="button" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script th:src="@{/js/timer.js}" type="text/javascript"></script>
+
+</body>
+</html>

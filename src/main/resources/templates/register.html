@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Log In</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+<div class="login-form">
+    <div class="form-box">
+        <h1>REGISTER</h1>
+        <div th:if="${param.error}">
+            Invalid username and password.</div>
+        <form th:action="@{/register}" class="form-content" method="post" th:object="${user}">
+            <div>
+                <div th:each="error: ${#fields.errors('lastName')}"
+                     th:text="'* ' + ${error}"></div>
+                <input type="text" th:field="*{firstName}" class="input" placeholder="FirstName"/>
+            </div>
+            <div>
+                <div th:each="error: ${#fields.errors('lastName')}"
+                     th:text="'* ' + ${error}"></div>
+                <input type="text" th:field="*{lastName}" class="input" placeholder="LastName"/>
+            </div>
+            <div>
+                <div th:each="error: ${#fields.errors('email')}"
+                     th:text="'* ' + ${error}"></div>
+                <input type="text" th:field="*{email}" class="input" placeholder="Email"/>
+            </div>
+            <div>
+                <input type="text" th:field="*{username}" class="input" placeholder="Username"/>
+            </div>
+            <div>
+                <input type="password" th:field="*{password}" class="input" placeholder="Password"/>
+            </div>
+            <input type="submit" class="submit-button" value="SUBMIT" />
+        </form>
+    </div>
+</div>
+</body>
+</html>

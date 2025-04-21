@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Demo</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/testing-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+    <div th:replace="header :: header"></div>
+    <div class="content">
+        <div class="tests-container">
+            <ul class="responsive-table">
+                <li class="table-header">
+                    <div class="col col-1">#</div>
+                    <div class="col col-2" th:with="toggle = ${#strings.isEmpty(param.sort)} ? 'null' : ${param.sort[0]}">
+                        <p>Name</p>
+                        <a th:attr="href=${#strings.equals('testDetails.name,desc', toggle)
+                        ? '/app/user/tests?sort=testDetails.name,asc'
+                        :  '/app/user/tests?sort=testDetails.name,desc'}"
+                           role="button">
+                            <img class="sort-symbol" th:src="@{/img/sort.png}" alt="sort">
+                        </a>
+                    </div>
+                    <div class="col col-3" th:with="toggle = ${#strings.isEmpty(param.sort)} ? 'null' : ${param.sort[0]}">
+                        <p>Subject</p>
+                        <a th:attr="href=${#strings.equals('testDetails.subject,desc', toggle)
+                        ? '/app/user/tests?sort=testDetails.subject,asc'
+                        :  '/app/user/tests?sort=testDetails.subject,desc'}"
+                           role="button">
+                            <img class="sort-symbol" th:src="@{/img/sort.png}" alt="sort">
+                        </a>
+                    </div>
+                    <div class="col col-3" th:with="toggle = ${#strings.isEmpty(param.sort)} ? 'null' : ${param.sort[0]}">
+                        <p>Difficulty</p>
+                        <a th:attr="href=${#strings.equals('testDetails.difficulty,desc', toggle)
+                        ? '/app/user/tests?sort=testDetails.difficulty,asc'
+                        :  '/app/user/tests?sort=testDetails.difficulty,desc'}"
+                           role="button">
+                            <img class="sort-symbol" th:src="@{/img/sort.png}" alt="sort">
+                        </a>
+                    </div>
+                    <div class="col col-1">Time (minutes)</div>
+                    <div class="col col-1" th:with="toggle = ${#strings.isEmpty(param.sort)} ? 'null' : ${param.sort[0]}">
+                        <p>Views</p>
+                        <a th:attr="href=${#strings.equals('viewNumber,desc', toggle)
+                        ? '/app/user/tests?sort=viewNumber,asc'
+                        :  '/app/user/tests?sort=viewNumber,desc'}"
+                           role="button">
+                            <img class="sort-symbol" th:src="@{/img/sort.png}" alt="sort">
+                        </a>
+                    </div>
+                    <div class="col col-1">Start</div>
+                </li>
+                <li th:each="test: ${tests}" class="table-row">
+                    <div class="col col-1">
+                        <div class="table-mobile-view">#</div>
+                        <div th:value="${test.id}" th:text="${test.id}"></div>
+                    </div>
+                    <div class="col col-2">
+                        <div class="table-mobile-view">Name</div>
+                        <div th:value="${test.testDetails.name}" th:text="${test.testDetails.name}"></div>
+                    </div>
+                    <div class="col col-3">
+                        <div class="table-mobile-view">Subject</div>
+                        <div th:value="${test.testDetails.subject}" th:text="${test.testDetails.subject}"></div>
+                    </div>
+                    <div class="col col-3">
+                        <div class="table-mobile-view">Difficulty</div>
+                        <div th:value="${test.testDetails.difficulty}" th:text="${test.testDetails.difficulty}"></div>
+                    </div>
+                    <div class="col col-1">
+                        <div class="table-mobile-view">Time</div>
+                        <div th:value="${test.timeToComplete}" th:text="${test.timeToComplete}"></div>
+                    </div>
+                    <div class="col col-1">
+                        <div class="table-mobile-view">Views</div>
+                        <div th:value="${test.viewNumber}" th:text="${test.viewNumber}"></div>
+                    </div>
+                    <div class="col col-1 mobile-button">
+                        <form th:action="@{/app/student/tests/{id}/startTest(id=${test.id})}" method="POST">
+                            <button class="button" type="submit">Start</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

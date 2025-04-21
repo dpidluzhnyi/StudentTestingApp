@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Demo</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/testing-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+    <div th:fragment="results">
+        <div class="tests-container">
+            <ul class="responsive-table">
+                <li class="table-header">
+                    <div class="col col-1">#</div>
+                    <div class="col col-2">Name</div>
+                    <div class="col col-3">Subject</div>
+                    <div class="col col-3">Difficulty</div>
+                    <div class="col col-1">Date</div>
+                    <div class="col col-1">Time (Minutes)</div>
+                    <div class="col col-1">Score %</div>
+                </li>
+                <li th:each="result: ${results}" class="table-row">
+                    <div class="col col-1">
+                        <div class="table-mobile-view">#</div>
+                        <div th:value="${result.id}" th:text="${result.id}"></div>
+                    </div>
+                    <div class="col col-2">
+                        <div class="table-mobile-view">Name</div>
+                        <div th:value="${result.testDetails.name}" th:text="${result.testDetails.name}"></div>
+                    </div>
+                    <div class="col col-3">
+                        <div class="table-mobile-view">Subject</div>
+                        <div th:value="${result.testDetails.subject}" th:text="${result.testDetails.subject}"></div>
+                    </div>
+                    <div class="col col-3">
+                        <div class="table-mobile-view">Difficulty</div>
+                        <div th:value="${result.testDetails.difficulty}" th:text="${result.testDetails.difficulty}"></div>
+                    </div>
+                    <div class="col col-1">
+                        <div class="table-mobile-view">Date</div>
+                        <div th:value="${result.date}" th:text="${result.date}"></div>
+                    </div>
+                    <div class="col col-1">
+                        <div class="table-mobile-view">Time</div>
+                        <div th:value="${result.completionTime}" th:text="${result.completionTime}"></div>
+                    </div>
+                    <div class="col col-1">
+                        <div class="table-mobile-view">Score</div>
+                        <div th:value="${result.score}" th:text="${result.score} + '%'"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

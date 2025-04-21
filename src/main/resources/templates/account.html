@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Demo</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/testing-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/account.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+<div th:replace="header :: header"></div>
+<div class="content">
+    <div class="test-edit-container">
+        <div class="account-general-info-container">
+            <h2>ACCOUNT</h2>
+            <form th:action="@{/app/student/{userId}/account(userId=${user.id})}" method="PUT">
+                <div class="col">
+                    <p>Firstname: </p>
+                    <div class="col">
+                        <label class="w-100">
+                            <input type="text" th:value="${user.firstName}" name="firstName" class="input" placeholder="Firstname"/>
+                        </label>
+                    </div>
+                    <p>Lastname: </p>
+                    <div class="col">
+                        <label class="w-100">
+                            <input type="text" th:value="${user.lastName}" name="lastName" class="input" placeholder="Lastname"/>
+                        </label>
+                    </div>
+                    <p>Email: </p>
+                    <div class="col">
+                        <label class="w-100">
+                            <input type="text" th:value="${user.email}" name="email" class="input" placeholder="Email"/>
+                        </label>
+                    </div>
+                </div>
+                <button class="button wide-button" type="submit" name="update" value="update">Update</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div th:replace="results-fragment :: results"></div>
+</div>
+</body>
+</html>

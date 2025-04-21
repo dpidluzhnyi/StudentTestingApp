@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Demo</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+    <div th:fragment="header">
+        <div class="main-nav-horizontal">
+            <div class="main-nav-horizontal__container">
+                <div>
+                    <div class="main-nav-horizontal__item">
+                        <div sec:authorize="hasRole('STUDENT')">
+                            <a th:href="@{/app/student/tests}">Home</a>
+                        </div>
+                        <div sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{/app/admin/tests}">Home</a>
+                        </div>
+                    </div>
+                    <div class="main-nav-horizontal__item">
+                        <div sec:authorize="hasRole('STUDENT')">
+                            <a th:href="@{/app/student/tests}">Tests</a>
+                        </div>
+                        <div sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{/app/admin/tests}">Tests</a>
+                        </div>
+                    </div>
+                    <div class="main-nav-horizontal__item">
+                        <div sec:authorize="hasRole('STUDENT')"
+                             th:with="currentUserId = ${#authentication.principal.getUser.id}">
+                            <a th:href="@{/app/student/{id}/results(id=${currentUserId})}">Results</a>
+                        </div>
+                        <div sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{/app/admin/students}">Students</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="main-nav-horizontal__item">
+                        <div sec:authorize="hasRole('STUDENT')"
+                             th:with="currentUserId = ${#authentication.principal.getUser.id}">
+                            <a th:href="@{/app/student/{id}/account(id = ${currentUserId})}">My Account</a>
+                        </div>
+                    </div>
+                    <div class="main-nav-horizontal__item">
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

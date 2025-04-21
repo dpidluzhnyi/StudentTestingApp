@@ -1,0 +1,24 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  font-family: 'lato', sans-serif;
+}
+
+.content {
+    position: relative;
+    top: 80px;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+* {
+  box-sizing: border-box;
+}

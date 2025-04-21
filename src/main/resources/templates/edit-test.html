@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Demo</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/editing.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+</head>
+<body>
+<div th:replace="header :: header"></div>
+<div class="content">
+    <div class="test-edit-container">
+        <h2>EDITING</h2>
+        <div class="test-editing-general-info-container">
+            <form th:action="@{/app/admin/tests/{id}/updateTest(id=${test.id})}" method="POST">
+                <input type="hidden" th:value="${test.id}" th:name="testId">
+                <div class="col">
+                    <p>Name: </p>
+                    <div class="col">
+                        <label class="w-100">
+                            <input type="text" th:value="${test.testDetails.name}" name="testName" class="input" placeholder="Name"/>
+                        </label>
+                    </div>
+                    <p>Difficulty: </p>
+                    <div class="col">
+                        <label class="w-100">
+                            <select th:value="${test.testDetails.difficulty}" name="difficulty" class="input">
+                                <option th:each="difficulty : ${T(com.dmytro.pidluzhnyi.StudentTestingApp.entity.util.Difficulty).values()}"
+                                        th:value="${difficulty}" th:text="${difficulty}"></option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <p>Subject: </p>
+                    <div class="col">
+                        <label class="w-100">
+                            <input type="text" th:value="${test.testDetails.subject}" name="subject" class="input" placeholder="Subject"/>
+                        </label>
+                    </div>
+                    <p>Time: </p>
+                    <div class="col">
+                        <label class="w-100">
+                            <input type="number" th:value="${test.timeToComplete}" name="timeToComplete" class="input" placeholder="Time to complete"/>
+                        </label>
+                    </div>
+                </div>
+                <button class="button wide-button" type="submit" name="update" value="update">Update</button>
+            </form>
+        </div>
+
+        <div th:with="questions = ${test.questions}">
+            <div th:each="question, iterator:  ${#lists.sort(questions)}" class="col question__box">
+                <div class="question__prompt col">
+                    <p class="col-1" th:text="'Q'+ ${iterator.index + 1} + '. ' + ${question.text}"></p>
+                    <button class="button wide-button reveal-button col-2" name="reveal" value="reveal" onclick="toggleQuestion(this)">+</button>
+                </div>
+                <form th:action="@{/app/admin/questions/{id}/updateQuestion(id=${question.id})}" method="POST" class="w-100" hidden="hidden">
+                    <input type="hidden" th:value="${test.id}" th:name="testId">
+                    <input type="hidden" th:value="${question.id}" th:name="questionId"/>
+                    <div class="question__text">
+                        <label>
+                            <input type="text" th:value="${question.text}"
+                                   th:name="'question_' + ${question.id} + '-' + 'text'"
+                                   class="input" placeholder="Question?"/>
+                        </label>
+                    </div>
+                    <div th:with="options = ${question.options}">
+                        <div th:each="option: ${#lists.sort(options)}" class="question">
+                            <div class="select-box">
+                                <label>
+                                    <input type="checkbox"
+                                           th:name="'answer_' + ${option.id}"
+                                           th:value="${option.answer}"
+                                           th:checked="${option.answer ? true: false}">
+                                </label>
+                                <label class="w-100">
+                                    <input type="text" th:value="${option.text}"
+                                           th:name="'option_' + ${option.id}"
+                                           class="input" placeholder="Enter option"/>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="hidden" th:value="${option.id}" th:name="optionId">
+                                <button class="button" type="submit" name="remove" value="remove">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-box">
+                        <button class="button wide-button question__button" type="submit" name="update" value="update">Update</button>
+                        <button class="button wide-button question__button" type="submit" name="add" value="add" >Add Option</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <form th:action="@{/app/admin/questions}" method="POST">
+            <input type="hidden" th:value="${test.id}" th:name="testId">
+            <button class="button wide-button" type="submit" name="add" value="add">Add Question</button>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/js/main.js}" type="text/javascript"></script>
+</body>
+</html>
